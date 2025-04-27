@@ -149,7 +149,7 @@ export const content: ContentItem[] = [
       "Queen Ramonda, Shuri, M'Baku, Okoye, and the Dora Milaje fight to protect their nation from intervening world powers in the wake of King T'Challa's death.",
     poster: "/posters/Wakanda.jpeg",
     embed:
-      "https://www.dropbox.com/scl/fi/mzvi1h4ahrg3ibpabu0oz/wakanda.mkv?rlkey=9b2mojpa5jz2zstvy7ljoxrkt&st=w4iqao6l&dl=0",
+      "https://www.dropbox.com/scl/fi/a3ugpsrslrn7ws6xn6jgl/wakan.mp4?rlkey=htlyythjn5sxhewau3xa127t9&st=arzylfwc&dl=0",
     type: "movie",
     year: 2022,
     genres: ["Romance", "Comedy"],

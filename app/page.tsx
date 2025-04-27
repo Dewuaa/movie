@@ -2,6 +2,7 @@ import { content } from "../data/movies";
 import Image from "next/image";
 import Link from "next/link";
 import ContentCard from "../components/ContentCard";
+import PlayButton from "../components/PlayButton";
 
 export default function Home() {
   const featuredItem = content[0];
@@ -44,13 +45,12 @@ export default function Home() {
                 {featuredItem.description}
               </p>
               <div className="flex flex-wrap gap-4">
-                <Link
+                <PlayButton
                   href={
                     featuredItem.type === "movie"
                       ? `/movies/${featuredItem.id}`
                       : `/series/${featuredItem.id}`
                   }
-                  className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 px-8 py-3 rounded-lg font-medium flex items-center group transition-all"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +65,7 @@ export default function Home() {
                     />
                   </svg>
                   <span>Stream Now</span>
-                </Link>
+                </PlayButton>
                 <button className="bg-gray-800 bg-opacity-70 hover:bg-opacity-100 border border-gray-600 px-6 py-3 rounded-lg font-medium flex items-center group transition-all">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

@@ -2,6 +2,7 @@ import { movies } from "../../../data/movies";
 import Image from "next/image";
 import Link from "next/link";
 import VideoPlayer from "../../../components/VideoPlayer";
+import PlayButton from "../../../components/PlayButton";
 
 // Define the params type without using a custom interface
 export default async function MoviePage({
@@ -119,7 +120,7 @@ export default async function MoviePage({
                 </p>
 
                 <div className="flex flex-wrap gap-3 mb-6">
-                  <button className="px-6 py-3 md:px-8 md:py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 rounded-lg font-medium flex items-center transition">
+                  <PlayButton href={`/watch/${movie.id}`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-5 w-5 mr-2"
@@ -133,7 +134,7 @@ export default async function MoviePage({
                       />
                     </svg>
                     Play Now
-                  </button>
+                  </PlayButton>
                   <button className="px-5 py-3 bg-gray-800 hover:bg-gray-700 rounded-lg flex items-center font-medium transition">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
