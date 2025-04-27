@@ -2,13 +2,14 @@ import { movies } from "../../../data/movies";
 import Image from "next/image";
 import Link from "next/link";
 
-// Define the correct PageProps interface to match Next.js 15.3 requirements
-interface PageProps {
+// The Next.js 15.3 way - no custom interface
+export default async function MoviePage({
+  params,
+  searchParams,
+}: {
   params: { id: string };
-  searchParams: Record<string, string | string[] | undefined>;
-}
-
-export default async function MoviePage({ params }: PageProps) {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   // Get the ID safely
   const id = params.id;
 
