@@ -1,7 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import ReactPlayer from "react-player";
+import { useState, useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
+import "plyr-react/plyr.css";
+
+// Import Plyr dynamically to avoid SSR issues
+const Plyr = dynamic(() => import("plyr-react").then((mod) => mod.default), {
+  ssr: false,
+});
 
 export default function VideoPlayer({
   embedUrl,
@@ -12,14 +18,78 @@ export default function VideoPlayer({
 }) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const plyrRef = useRef(null);
+  const [isClient, setIsClient] = useState(false);
 
+  // Mark when component mounts on client
   useEffect(() => {
-    // Reset states when URL changes
+    setIsClient(true);
+  }, []);
+
+  // Reset states when URL changes
+  useEffect(() => {
     setIsLoading(true);
     setHasError(false);
-    setIsPlaying(false);
   }, [embedUrl]);
+
+  // Setup event listeners after component is mounted
+  useEffect(() => {
+    if (!isClient) return;
+
+    // Give the player time to initialize
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [isClient]);
+
+  // Custom Plyr options for Netflix-like appearance
+  const plyrOptions = {
+    controls: [
+      "play-large",
+      "play",
+      "progress",
+      "current-time",
+      "duration",
+      "mute",
+      "volume",
+      "captions",
+      "settings",
+      "fullscreen",
+    ],
+    settings: ["captions", "quality", "speed"],
+    speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2] },
+    resetOnEnd: false,
+    displayDuration: true,
+    keyboard: { focused: true, global: true },
+    tooltips: { controls: true, seek: true },
+    ratio: "16:9",
+    // Add event listeners via options
+    listeners: {
+      error: () => {
+        setIsLoading(false);
+        setHasError(true);
+      },
+    },
+  };
+
+  const plyrSource = {
+    type: "video",
+    title: title,
+    sources: [
+      {
+        src: embedUrl,
+        type: embedUrl.includes(".mp4")
+          ? "video/mp4"
+          : embedUrl.includes(".mkv")
+          ? "video/x-matroska"
+          : embedUrl.includes("youtube")
+          ? "video/youtube"
+          : "video/mp4",
+      },
+    ],
+  };
 
   return (
     <div className="aspect-video relative rounded-lg overflow-hidden shadow-lg card-glow">
@@ -64,40 +134,45 @@ export default function VideoPlayer({
         </div>
       )}
 
-      <div style={{ display: isLoading || hasError ? "none" : "block" }}>
-        <ReactPlayer
-          url={embedUrl}
-          width="100%"
-          height="100%"
-          playing={isPlaying}
-          controls={true}
-          light={false}
-          pip={true}
-          onReady={() => {
-            setIsLoading(false);
-            setIsPlaying(true);
-          }}
-          onError={() => {
-            setIsLoading(false);
-            setHasError(true);
-          }}
-          onPlay={() => setIsPlaying(true)}
-          onPause={() => setIsPlaying(false)}
-          config={{
-            file: {
-              attributes: {
-                controlsList: "nodownload",
-                title: title,
-              },
-            },
-            youtube: {
-              playerVars: { showinfo: 1 },
-            },
-          }}
-          style={{ position: "absolute", top: 0, left: 0 }}
-          className="rounded-lg"
-        />
-      </div>
+      {isClient && (
+        <div
+          style={{ display: isLoading || hasError ? "none" : "block" }}
+          className="plyr-container"
+        >
+          <Plyr ref={plyrRef} source={plyrSource} options={plyrOptions} />
+        </div>
+      )}
+
+      {/* Custom Netflix-like styling */}
+      <style jsx global>{`
+        .plyr--full-ui input[type="range"] {
+          color: #e50914 !important; /* Netflix red */
+        }
+        .plyr__control--overlaid {
+          background: rgba(229, 9, 20, 0.8) !important;
+        }
+        .plyr--video .plyr__control.plyr__tab-focus,
+        .plyr--video .plyr__control:hover,
+        .plyr--video .plyr__control[aria-expanded="true"] {
+          background: #e50914 !important;
+        }
+        .plyr__control.plyr__tab-focus {
+          box-shadow: 0 0 0 5px rgba(229, 9, 20, 0.5) !important;
+        }
+        .plyr__menu__container
+          .plyr__control[role="menuitemradio"][aria-checked="true"]::before {
+          background: #e50914 !important;
+        }
+        .plyr-container {
+          position: relative;
+          width: 100%;
+          height: 100%;
+        }
+        .plyr {
+          height: 100%;
+          border-radius: 0.5rem;
+        }
+      `}</style>
     </div>
   );
 }
