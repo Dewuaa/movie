@@ -51,8 +51,9 @@ export const content: ContentItem[] = [
   {
     id: "2",
     title: "John Wick: Chapter 3 - Parabellum",
+    // In the description:
     description:
-      " John Wick is on the run after killing a member of the international assassin's guild, and with a $14 million price tag on his head, he is the target of hit",
+      " John Wick is on the run after killing a member of the international assassin&apos;s guild, and with a $14 million price tag on his head, he is the target of hit",
     poster: "/posters/John Wick.jpeg",
     embed: "https://mxdrop.to/e/el1z9q67bx1zdp",
     type: "movie",

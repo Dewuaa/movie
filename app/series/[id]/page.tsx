@@ -1,7 +1,6 @@
 import { content, Series } from "../../../data/movies";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import VideoPlayer from "../../../components/VideoPlayer";
 
 export default async function SeriesPage({
@@ -11,8 +10,13 @@ export default async function SeriesPage({
   params: { id: string };
   searchParams: { season?: string; episode?: string };
 }) {
+  // Get the values safely - await them
+  const id = params.id;
+  const seasonQueryParam = searchParams.season;
+  const episodeQueryParam = searchParams.episode;
+
   const series = content.find(
-    (item) => item.id === params.id && item.type === "series"
+    (item) => item.id === id && item.type === "series"
   ) as Series | undefined;
 
   if (!series) {
@@ -20,7 +24,7 @@ export default async function SeriesPage({
       <div className="container mx-auto px-4 py-16 text-center">
         <h1 className="text-2xl font-bold mb-4">Series not found</h1>
         <p className="mb-8 text-gray-400">
-          The series you're looking for doesn't exist.
+          The series you&apos;re looking for doesn&apos;t exist.
         </p>
         <Link
           href="/"
@@ -32,11 +36,9 @@ export default async function SeriesPage({
     );
   }
 
-  // Default to first season and episode if not specified
-  const seasonParam = searchParams.season ? parseInt(searchParams.season) : 1;
-  const episodeParam = searchParams.episode
-    ? parseInt(searchParams.episode)
-    : 1;
+  // Default to first season and episode if not specified - use the extracted values
+  const seasonParam = seasonQueryParam ? parseInt(seasonQueryParam) : 1;
+  const episodeParam = episodeQueryParam ? parseInt(episodeQueryParam) : 1;
 
   // Find the selected season and episode
   const selectedSeason =
@@ -47,6 +49,7 @@ export default async function SeriesPage({
     selectedSeason.episodes.find((e) => e.episodeNumber === episodeParam) ||
     selectedSeason.episodes[0];
 
+  // Rest of your component remains the same
   return (
     <div>
       {/* Hero Banner with Glassy Effect */}
@@ -220,15 +223,8 @@ export default async function SeriesPage({
 
           {/* Video Player */}
           <div className="rounded-lg overflow-hidden shadow-2xl mb-8 card-glow">
-            <iframe
-              src={selectedEpisode.embed}
-              width="100%"
-              height="600"
-              frameBorder="0"
-              allowFullScreen
-              className="rounded-lg"
-              referrerPolicy="no-referrer"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            <VideoPlayer
+              embedUrl={selectedEpisode.embed}
               title={`${series.title} - ${selectedEpisode.title}`}
             />
           </div>

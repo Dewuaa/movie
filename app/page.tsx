@@ -117,7 +117,10 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
               {movies.map((movie) => (
-                <ContentCard key={movie.id} item={movie} />
+                <ContentCard
+                  key={movie.id}
+                  item={{ ...movie, year: movie.year?.toString() }}
+                />
               ))}
             </div>
           </div>
@@ -149,7 +152,10 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
               {series.map((show) => (
-                <ContentCard key={show.id} item={show} />
+                <ContentCard
+                  key={show.id}
+                  item={{ ...show, year: show.year?.toString() }}
+                />
               ))}
             </div>
           </div>

@@ -47,7 +47,7 @@ export default function VideoPlayer({
           </svg>
           <p className="text-gray-400 text-lg mb-2">Oops! Playback Error</p>
           <p className="text-gray-500 mb-4">
-            We're having trouble playing this video
+            We&apos;re having trouble playing this video
           </p>
           <button
             className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 rounded text-white"

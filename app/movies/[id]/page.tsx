@@ -7,14 +7,17 @@ export default async function MoviePage({
 }: {
   params: { id: string };
 }) {
-  const movie = movies.find((m) => m.id === params.id);
+  // Get the ID safely
+  const id = params.id;
+
+  const movie = movies.find((m) => m.id === id);
 
   if (!movie) {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
         <h1 className="text-2xl font-bold mb-4">Movie not found</h1>
         <p className="mb-8 text-gray-400">
-          The movie you're looking for doesn't exist.
+          The movie you&apos;re looking for doesn&apos;t exist.
         </p>
         <Link
           href="/"
