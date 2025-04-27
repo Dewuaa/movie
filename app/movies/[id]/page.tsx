@@ -2,7 +2,7 @@ import { movies } from "../../../data/movies";
 import Image from "next/image";
 import Link from "next/link";
 
-// Update to use the proper Next.js 15.3 typing
+// Define the params type without using a custom interface
 export default async function MoviePage({
   params,
 }: {
@@ -11,33 +11,6 @@ export default async function MoviePage({
   const id = params.id;
 
   const movie = movies.find((m) => m.id === id);
-
-  if (!movie) {
-    return (
-      <div className="container mx-auto px-4 py-16 text-center">
-        <h1 className="text-2xl font-bold mb-4">Movie not found</h1>
-        <Link
-          href="/"
-          className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white py-2 px-6 rounded-lg"
-        >
-          Back to Home
-        </Link>
-      </div>
-    );
-  }
-  if (!movie) {
-    return (
-      <div className="container mx-auto px-4 py-16 text-center">
-        <h1 className="text-2xl font-bold mb-4">Movie not found</h1>
-        <Link
-          href="/"
-          className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white py-2 px-6 rounded-lg"
-        >
-          Back to Home
-        </Link>
-      </div>
-    );
-  }
 
   if (!movie) {
     return (

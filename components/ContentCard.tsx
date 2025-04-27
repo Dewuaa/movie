@@ -4,7 +4,17 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function ContentCard({ item }) {
+interface ContentItem {
+  id: string;
+  type: "movie" | "series";
+  title: string;
+  poster: string;
+  description: string;
+  year?: string;
+  seasons?: { length: number }[];
+}
+
+export default function ContentCard({ item }: { item: ContentItem }) {
   const [isHovered, setIsHovered] = useState(false);
   const [imgError, setImgError] = useState(false);
 
