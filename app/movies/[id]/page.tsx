@@ -5,12 +5,9 @@ import Link from "next/link";
 // Update to use the proper Next.js 15.3 typing
 export default async function MoviePage({
   params,
-  searchParams,
 }: {
   params: { id: string };
-  searchParams?: Record<string, string | string[] | undefined>;
 }) {
-  // Safely access the `id`
   const id = params.id;
 
   const movie = movies.find((m) => m.id === id);
