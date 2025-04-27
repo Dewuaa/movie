@@ -2,12 +2,13 @@ import { movies } from "../../../data/movies";
 import Image from "next/image";
 import Link from "next/link";
 
-// Remove searchParams from the function parameters since it's not being used
-export default async function MoviePage({
-  params,
-}: {
+// Define the correct PageProps interface to match Next.js 15.3 requirements
+interface PageProps {
   params: { id: string };
-}) {
+  searchParams: Record<string, string | string[] | undefined>;
+}
+
+export default async function MoviePage({ params }: PageProps) {
   // Get the ID safely
   const id = params.id;
 
