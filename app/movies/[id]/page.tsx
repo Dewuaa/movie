@@ -1,6 +1,7 @@
 import { movies } from "../../../data/movies";
 import Image from "next/image";
 import Link from "next/link";
+import VideoPlayer from "../../../components/VideoPlayer";
 
 // Define the params type without using a custom interface
 export default async function MoviePage({
@@ -202,17 +203,7 @@ export default async function MoviePage({
 
           {movie.embed ? (
             <div className="rounded-lg overflow-hidden shadow-2xl mb-8 card-glow">
-              <iframe
-                src={movie.embed}
-                width="100%"
-                height="600"
-                frameBorder="0"
-                allowFullScreen
-                className="rounded-lg"
-                referrerPolicy="no-referrer"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                title={movie.title}
-              />
+              <VideoPlayer embedUrl={movie.embed} title={movie.title} />
             </div>
           ) : (
             <div className="aspect-video bg-gray-800 rounded-lg flex items-center justify-center mb-8 border border-gray-700">

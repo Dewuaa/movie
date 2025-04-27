@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import ReactPlayer from "react-player";
 
 export default function VideoPlayer({
   embedUrl,
@@ -11,17 +12,19 @@ export default function VideoPlayer({
 }) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     // Reset states when URL changes
     setIsLoading(true);
     setHasError(false);
+    setIsPlaying(false);
   }, [embedUrl]);
 
   return (
     <div className="aspect-video relative rounded-lg overflow-hidden shadow-lg card-glow">
       {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-900 z-10">
           <div className="flex flex-col items-center">
             <div className="w-12 h-12 border-4 border-t-cyan-400 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin mb-4"></div>
             <p className="text-cyan-400">Loading your content...</p>
@@ -30,7 +33,7 @@ export default function VideoPlayer({
       )}
 
       {hasError && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-900">
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-900 z-10">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-16 w-16 text-gray-600 mb-4"
@@ -54,12 +57,6 @@ export default function VideoPlayer({
             onClick={() => {
               setIsLoading(true);
               setHasError(false);
-              const iframe = document.getElementById(
-                "video-iframe"
-              ) as HTMLIFrameElement;
-              if (iframe) {
-                iframe.src = iframe.src;
-              }
             }}
           >
             Try Again
@@ -67,22 +64,40 @@ export default function VideoPlayer({
         </div>
       )}
 
-      <iframe
-        id="video-iframe"
-        src={embedUrl}
-        width="100%"
-        height="100%"
-        frameBorder="0"
-        allowFullScreen
-        onLoad={() => setIsLoading(false)}
-        onError={() => {
-          setIsLoading(false);
-          setHasError(true);
-        }}
-        style={{ display: isLoading || hasError ? "none" : "block" }}
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        title={title}
-      />
+      <div style={{ display: isLoading || hasError ? "none" : "block" }}>
+        <ReactPlayer
+          url={embedUrl}
+          width="100%"
+          height="100%"
+          playing={isPlaying}
+          controls={true}
+          light={false}
+          pip={true}
+          onReady={() => {
+            setIsLoading(false);
+            setIsPlaying(true);
+          }}
+          onError={() => {
+            setIsLoading(false);
+            setHasError(true);
+          }}
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          config={{
+            file: {
+              attributes: {
+                controlsList: "nodownload",
+                title: title,
+              },
+            },
+            youtube: {
+              playerVars: { showinfo: 1 },
+            },
+          }}
+          style={{ position: "absolute", top: 0, left: 0 }}
+          className="rounded-lg"
+        />
+      </div>
     </div>
   );
 }

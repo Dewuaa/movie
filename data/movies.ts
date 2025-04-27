@@ -43,7 +43,8 @@ export const content: ContentItem[] = [
     description:
       "T'Challa, the King of Wakanda, rises to the throne in the isolated, technologically advanced African nation, but his past comes back to haunt him.",
     poster: "/posters/Black Panther.jpeg",
-    embed: "https://mxdrop.to/e/el1z9nwpiq0rvwr",
+    embed:
+      "https://cineverse.blob.core.windows.net/videos/Black.Panther.2018.1080p.BluRay.x264-%5BYTS.AM%5D.mp4",
     type: "movie",
     year: 2018,
     genres: ["Romance", "Drama"],
@@ -55,7 +56,8 @@ export const content: ContentItem[] = [
     description:
       " John Wick is on the run after killing a member of the international assassin&apos;s guild, and with a $14 million price tag on his head, he is the target of hit",
     poster: "/posters/John Wick.jpeg",
-    embed: "https://mxdrop.to/e/el1z9q67bx1zdp",
+    embed:
+      "https://cineverse.blob.core.windows.net/videos/John.Wick.Chapter.3.-.Parabellum.2019.1080p.WEBRip.x264-%5BYTS.LT%5D.mp4",
     type: "movie",
     year: 2022,
     genres: ["Romance", "Comedy"],
@@ -134,7 +136,8 @@ export const content: ContentItem[] = [
     description:
       "After a drug deal gone wrong, a detective must fight his way through a criminal underworld to rescue a politician's son while uncovering a deep conspiracy.",
     poster: "/posters/Havoc.jpeg",
-    embed: "https://mxdrop.to/e/l7e9oopmcv8pw0",
+    embed:
+      "https://cineverse.blob.core.windows.net/videos/Havoc%202025%201080p%20WEB-DL%20HEVC%20x265%205.1%20BONE.mkv",
     type: "movie",
     year: 2025,
     genres: ["Romance", "Comedy"],
@@ -145,22 +148,23 @@ export const content: ContentItem[] = [
     description:
       "Queen Ramonda, Shuri, M'Baku, Okoye, and the Dora Milaje fight to protect their nation from intervening world powers in the wake of King T'Challa's death.",
     poster: "/posters/Wakanda.jpeg",
-    embed: "https://mxdrop.to/e/9wvxd9djijkj7o",
+    embed:
+      "https://cineverse.blob.core.windows.net/videos/Black.Panther.Wakanda.Forever.2022.1080p.BluRay.1600MB.DD5.1.x264-GalaxyRG.mkv",
     type: "movie",
     year: 2022,
     genres: ["Romance", "Comedy"],
   },
-  {
-    id: "6",
-    title: "John Wick: Chapter 3 - Parabellum",
-    description:
-      " John Wick is on the run after killing a member of the international assassin's guild, and with a $14 million price tag on his head, he is the target of hit",
-    poster: "/posters/John Wick.jpeg",
-    embed: "https://mxdrop.to/e/el1z9q67bx1zdp",
-    type: "movie",
-    year: 2022,
-    genres: ["Romance", "Comedy"],
-  },
+  // {
+  //   id: "6",
+  //   title: "John Wick: Chapter 3 - Parabellum",
+  //   description:
+  //     " John Wick is on the run after killing a member of the international assassin's guild, and with a $14 million price tag on his head, he is the target of hit",
+  //   poster: "/posters/John Wick.jpeg",
+  //   embed: "https://mxdrop.to/e/el1z9q67bx1zdp",
+  //   type: "movie",
+  //   year: 2022,
+  //   genres: ["Romance", "Comedy"],
+  // },
 ];
 
 // For backward compatibility with existing code
