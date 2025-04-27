@@ -3,13 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import VideoPlayer from "../../../components/VideoPlayer";
 
-// Update the interface for PageProps to match Next.js 15.3 requirements
-interface PageProps {
+// Update to use the proper Next.js 15.3 typing
+export default async function SeriesPage({
+  params,
+  searchParams,
+}: {
   params: { id: string };
-  searchParams: Record<string, string | string[] | undefined>;
-}
-
-export default async function SeriesPage({ params, searchParams }: PageProps) {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   // Get the values safely
   const id = params.id;
   const seasonQueryParam = searchParams.season as string | undefined;

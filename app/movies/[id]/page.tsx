@@ -2,15 +2,15 @@ import { movies } from "../../../data/movies";
 import Image from "next/image";
 import Link from "next/link";
 
-// The Next.js 15.3 way - no custom interface
+// Update to use the proper Next.js 15.3 typing
 export default async function MoviePage({
   params,
   searchParams,
 }: {
   params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams?: Record<string, string | string[] | undefined>;
 }) {
-  // Get the ID safely
+  // Safely access the `id`
   const id = params.id;
 
   const movie = movies.find((m) => m.id === id);
@@ -19,9 +19,33 @@ export default async function MoviePage({
     return (
       <div className="container mx-auto px-4 py-16 text-center">
         <h1 className="text-2xl font-bold mb-4">Movie not found</h1>
-        <p className="mb-8 text-gray-400">
-          The movie you&apos;re looking for doesn&apos;t exist.
-        </p>
+        <Link
+          href="/"
+          className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white py-2 px-6 rounded-lg"
+        >
+          Back to Home
+        </Link>
+      </div>
+    );
+  }
+  if (!movie) {
+    return (
+      <div className="container mx-auto px-4 py-16 text-center">
+        <h1 className="text-2xl font-bold mb-4">Movie not found</h1>
+        <Link
+          href="/"
+          className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white py-2 px-6 rounded-lg"
+        >
+          Back to Home
+        </Link>
+      </div>
+    );
+  }
+
+  if (!movie) {
+    return (
+      <div className="container mx-auto px-4 py-16 text-center">
+        <h1 className="text-2xl font-bold mb-4">Movie not found</h1>
         <Link
           href="/"
           className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white py-2 px-6 rounded-lg"
