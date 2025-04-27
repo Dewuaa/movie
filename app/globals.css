@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+body {
+  background-color: #121826;
+  color: #f8fafc;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: #1e293b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+.card-glow {
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+}
+
+.custom-bg-gradient {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s infinite;
+}
