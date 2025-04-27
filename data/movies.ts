@@ -44,7 +44,7 @@ export const content: ContentItem[] = [
       "T'Challa, the King of Wakanda, rises to the throne in the isolated, technologically advanced African nation, but his past comes back to haunt him.",
     poster: "/posters/Black Panther.jpeg",
     embed:
-      "https://cineverse.blob.core.windows.net/videos/Black.Panther.2018.1080p.BluRay.x264-%5BYTS.AM%5D.mp4",
+      "https://www.dropbox.com/scl/fi/ehnj2gatuxjks6bf2u2o3/Black.Panther.2018.1080p.BluRay.x264-YTS.AM.mp4?rlkey=3qp037f769n1ey2m5p6z931e8&st=mckq9d44&dl=0",
     type: "movie",
     year: 2018,
     genres: ["Romance", "Drama"],
@@ -57,7 +57,7 @@ export const content: ContentItem[] = [
       " John Wick is on the run after killing a member of the international assassin&apos;s guild, and with a $14 million price tag on his head, he is the target of hit",
     poster: "/posters/John Wick.jpeg",
     embed:
-      "https://cineverse.blob.core.windows.net/videos/John.Wick.Chapter.3.-.Parabellum.2019.1080p.WEBRip.x264-%5BYTS.LT%5D.mp4",
+      "https://www.dropbox.com/scl/fi/xdowxed5tpvrw4q9vwpdd/weak.mp4?rlkey=h7dxmg79e10vfw622j5c72i5i&st=pkr3tbly&dl=0",
     type: "movie",
     year: 2022,
     genres: ["Romance", "Comedy"],
@@ -137,7 +137,7 @@ export const content: ContentItem[] = [
       "After a drug deal gone wrong, a detective must fight his way through a criminal underworld to rescue a politician's son while uncovering a deep conspiracy.",
     poster: "/posters/Havoc.jpeg",
     embed:
-      "https://cineverse.blob.core.windows.net/videos/Havoc%202025%201080p%20WEB-DL%20HEVC%20x265%205.1%20BONE.mkv",
+      "https://www.dropbox.com/scl/fi/px233cgb8fq2t75p2jykg/havoc.mkv?rlkey=zqvqaflqh554mual1uknsgbe5&st=q53w27lp&dl=0",
     type: "movie",
     year: 2025,
     genres: ["Romance", "Comedy"],
@@ -149,7 +149,7 @@ export const content: ContentItem[] = [
       "Queen Ramonda, Shuri, M'Baku, Okoye, and the Dora Milaje fight to protect their nation from intervening world powers in the wake of King T'Challa's death.",
     poster: "/posters/Wakanda.jpeg",
     embed:
-      "https://cineverse.blob.core.windows.net/videos/Black.Panther.Wakanda.Forever.2022.1080p.BluRay.1600MB.DD5.1.x264-GalaxyRG.mkv",
+      "https://www.dropbox.com/scl/fi/mzvi1h4ahrg3ibpabu0oz/wakanda.mkv?rlkey=9b2mojpa5jz2zstvy7ljoxrkt&st=w4iqao6l&dl=0",
     type: "movie",
     year: 2022,
     genres: ["Romance", "Comedy"],
