@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ContentCard from "../components/ContentCard";
 import PlayButton from "../components/PlayButton";
+import BannerAd from "../components/BannerAd";
 
 export default function Home() {
   const featuredItem = content[0];
@@ -124,6 +125,9 @@ export default function Home() {
               ))}
             </div>
           </div>
+
+          {/* Banner Ad */}
+          <BannerAd />
 
           {/* Series Section */}
           <div className="mb-16">

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import VideoPlayer from "../../../components/VideoPlayer";
 import PlayButton from "../../../components/PlayButton";
+import BannerAd from "../../../components/BannerAd";
 
 // Define the params type without using a custom interface
 export default async function MoviePage({
@@ -272,6 +273,9 @@ export default async function MoviePage({
               </div>
             </div>
           </div>
+
+          {/* Banner Ad */}
+          <BannerAd />
 
           {/* Similar Movies */}
           <div className="mb-8">

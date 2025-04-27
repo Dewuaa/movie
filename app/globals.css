@@ -40,3 +40,17 @@ body {
 .animate-pulse-glow {
   animation: pulse-glow 3s infinite;
 }
+
+/* You can add this to your globals.css */
+#container-ab0ca6ac13852ca5c16eef923341efa0 {
+  max-width: 100%;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+@media (max-width: 640px) {
+  #container-ab0ca6ac13852ca5c16eef923341efa0 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

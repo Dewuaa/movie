@@ -76,7 +76,7 @@ export default function AdBlockDetector() {
       <div>
         <p className="text-sm md:text-base">
           <span className="font-bold">
-            We notice you're using an ad blocker.
+            We notice you&apos;re using an ad blocker.
           </span>{" "}
           CineVerse is supported by ads. Please consider disabling your ad
           blocker to help us continue providing free content.
