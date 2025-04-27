@@ -64,10 +64,10 @@ export const content: ContentItem[] = [
   },
   {
     id: "3",
-    title: "The Breakup Series",
+    title: "Hello, Love, Again",
     description:
       "Follow the journey of couples navigating the challenging waters of relationships, breakups, and reconciliations.",
-    poster: "/posters/gangster.jpeg", // Replace with actual poster
+    poster: "/posters/again.jpeg", // Replace with actual poster
     type: "series",
     year: 2023,
     genres: ["Drama", "Romance"],
@@ -78,30 +78,31 @@ export const content: ContentItem[] = [
         episodes: [
           {
             id: "3-s1-e1",
-            title: "The Beginning of the End",
+            title: "Hello, Love, Again",
             description:
               "Sarah and Mike face their first major relationship challenge.",
-            embed: "https://do7go.com/e/jy03q2dder6i",
+            embed:
+              "https://www.dropbox.com/scl/fi/a0udfcggdyfxk8opsmgpp/again.mp4?rlkey=9yjo5dodn7kdv8f5qbh5n4w9j&st=9spnn63z&dl=0",
             episodeNumber: 1,
             duration: "42m",
           },
-          {
-            id: "3-s1-e2",
-            title: "Moving On",
-            description: "Sarah tries to rebuild her life after the breakup.",
-            embed: "https://do7go.com/e/0to4f5mw6z72",
-            episodeNumber: 2,
-            duration: "45m",
-          },
-          {
-            id: "3-s1-e3",
-            title: "New Horizons",
-            description:
-              "Mike meets someone new while Sarah focuses on her career.",
-            embed: "https://do7go.com/e/jy03q2dder6i",
-            episodeNumber: 3,
-            duration: "41m",
-          },
+          // {
+          //   id: "3-s1-e2",
+          //   title: "Moving On",
+          //   description: "Sarah tries to rebuild her life after the breakup.",
+          //   embed: "https://do7go.com/e/0to4f5mw6z72",
+          //   episodeNumber: 2,
+          //   duration: "45m",
+          // },
+          // {
+          //   id: "3-s1-e3",
+          //   title: "New Horizons",
+          //   description:
+          //     "Mike meets someone new while Sarah focuses on her career.",
+          //   embed: "https://do7go.com/e/jy03q2dder6i",
+          //   episodeNumber: 3,
+          //   duration: "41m",
+          // },
         ],
       },
       {
@@ -154,17 +155,18 @@ export const content: ContentItem[] = [
     year: 2022,
     genres: ["Romance", "Comedy"],
   },
-  // {
-  //   id: "6",
-  //   title: "John Wick: Chapter 3 - Parabellum",
-  //   description:
-  //     " John Wick is on the run after killing a member of the international assassin's guild, and with a $14 million price tag on his head, he is the target of hit",
-  //   poster: "/posters/John Wick.jpeg",
-  //   embed: "https://mxdrop.to/e/el1z9q67bx1zdp",
-  //   type: "movie",
-  //   year: 2022,
-  //   genres: ["Romance", "Comedy"],
-  // },
+  {
+    id: "6",
+    title: "Hello, Love, Goodbye",
+    description:
+      " John Wick is on the run after killing a member of the international assassin's guild, and with a $14 million price tag on his head, he is the target of hit",
+    poster: "/posters/goodbai.jpeg",
+    embed:
+      "https://www.dropbox.com/scl/fi/natwuwifxsiy16m79i1y2/goodbai.mp4?rlkey=vp8qg6wb5io846x7mf3lpcj7g&st=zunpezyl&dl=0",
+    type: "movie",
+    year: 2022,
+    genres: ["Romance", "Comedy"],
+  },
 ];
 
 // For backward compatibility with existing code
