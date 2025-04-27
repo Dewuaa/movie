@@ -3,17 +3,19 @@ import Image from "next/image";
 import Link from "next/link";
 import VideoPlayer from "../../../components/VideoPlayer";
 
-export default async function SeriesPage({
-  params,
-  searchParams,
-}: {
+// Update the interface for PageProps to match Next.js 15.3 requirements
+interface PageProps {
   params: { id: string };
-  searchParams: { season?: string; episode?: string };
-}) {
-  // Get the values safely - await them
+  searchParams: Record<string, string | string[] | undefined>;
+}
+
+export default async function SeriesPage({ params, searchParams }: PageProps) {
+  // Get the values safely
   const id = params.id;
-  const seasonQueryParam = searchParams.season;
-  const episodeQueryParam = searchParams.episode;
+  const seasonQueryParam = searchParams.season as string | undefined;
+  const episodeQueryParam = searchParams.episode as string | undefined;
+
+  // Rest of your component remains the same...
 
   const series = content.find(
     (item) => item.id === id && item.type === "series"
