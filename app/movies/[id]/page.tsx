@@ -1,218 +1,64 @@
-import { movies } from "../../../data/movies";
 import Image from "next/image";
 import Link from "next/link";
 import VideoPlayer from "../../../components/VideoPlayer";
-import PlayButton from "../../../components/PlayButton";
 import BannerAd from "../../../components/BannerAd";
+import { getMovieDetails } from "../../../lib/tmdb";
 
-// Define the params type without using a custom interface
 export default async function MoviePage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const id = params.id;
-
-  const movie = movies.find((m) => m.id === id);
+  const { id } = await params;
+  const movie = await getMovieDetails(id);
 
   if (!movie) {
     return (
-      <div className="container mx-auto px-4 py-16 text-center">
-        <h1 className="text-2xl font-bold mb-4">Movie not found</h1>
-        <Link
-          href="/"
-          className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white py-2 px-6 rounded-lg"
-        >
-          Back to Home
-        </Link>
+      <div className="min-h-screen flex items-center justify-center bg-black text-white">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-4">Movie not found</h1>
+          <Link
+            href="/"
+            className="text-cyan-400 hover:text-cyan-300 underline text-lg"
+          >
+            Return Home
+          </Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <div>
-      {/* Hero Banner with Glassy Effect */}
-      <div className="relative h-[60vh] md:h-[70vh] w-full">
+    <div className="bg-black min-h-screen text-white font-sans selection:bg-cyan-500/30">
+      {/* Immersive Hero Section */}
+      <div className="relative h-[85vh] w-full overflow-hidden">
+        {/* Background Image */}
         <div className="absolute inset-0">
           <Image
             src={movie.poster}
             alt={movie.title}
             fill
             sizes="100vw"
-            className="object-cover"
+            className="object-cover opacity-60 scale-105 animate-slow-zoom"
             priority
           />
-          <div className="absolute inset-0 backdrop-blur-sm bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent" />
+          {/* Cinematic Gradients */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
         </div>
 
-        <div className="absolute inset-0 flex items-end">
-          <div className="container mx-auto px-4 py-8 md:py-16">
-            <Link
-              href="/"
-              className="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition mb-6"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 mr-2"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+        {/* Hero Content */}
+        <div className="absolute inset-0 flex items-end pb-20">
+          <div className="container mx-auto px-6 md:px-12">
+            <div className="max-w-4xl animate-fade-in-up">
+              {/* Breadcrumb / Back Link */}
+              <Link
+                href="/"
+                className="inline-flex items-center text-gray-300 hover:text-white transition mb-6 group"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                />
-              </svg>
-              Back to Browse
-            </Link>
-
-            <div className="md:flex gap-8">
-              <div className="hidden md:block md:w-1/4 lg:w-1/5 relative aspect-[2/3] rounded-lg overflow-hidden animate-pulse-glow">
-                <Image
-                  src={movie.poster}
-                  alt={movie.title}
-                  fill
-                  className="object-cover rounded-lg"
-                  sizes="(max-width: 768px) 100vw, 300px"
-                />
-              </div>
-
-              <div className="md:w-3/4 lg:w-4/5">
-                <h1 className="text-4xl md:text-5xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300">
-                  {movie.title}
-                </h1>
-
-                <div className="flex flex-wrap items-center gap-4 mb-4">
-                  <div className="flex items-center">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center font-bold">
-                      9.2
-                    </div>
-                    <span className="ml-2 text-sm text-gray-300">
-                      User Score
-                    </span>
-                  </div>
-                  <span className="px-2 py-1 bg-gray-800 rounded text-xs">
-                    2023
-                  </span>
-                  <span className="px-2 py-1 bg-gray-800 rounded text-xs">
-                    2h 15m
-                  </span>
-                  <span className="px-2 py-1 bg-cyan-900 rounded text-xs font-medium">
-                    HD
-                  </span>
-                </div>
-
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="px-3 py-1 rounded-full bg-gray-800 text-xs">
-                    Drama
-                  </span>
-                  <span className="px-3 py-1 rounded-full bg-gray-800 text-xs">
-                    Romance
-                  </span>
-                  <span className="px-3 py-1 rounded-full bg-gray-800 text-xs">
-                    Comedy
-                  </span>
-                </div>
-
-                <p className="text-lg mb-6 text-gray-300 max-w-2xl">
-                  {movie.description}
-                </p>
-
-                <div className="flex flex-wrap gap-3 mb-6">
-                  <PlayButton href={`/watch/${movie.id}`}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 mr-2"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    Play Now
-                  </PlayButton>
-                  <button className="px-5 py-3 bg-gray-800 hover:bg-gray-700 rounded-lg flex items-center font-medium transition">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 mr-2"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 4v16m8-8H4"
-                      />
-                    </svg>
-                    Add to Watchlist
-                  </button>
-                  <button className="w-11 h-11 rounded-full bg-gray-800 hover:bg-gray-700 flex items-center justify-center transition">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 text-gray-300"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Video Content */}
-      <div className="custom-bg-gradient py-12">
-        <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold mb-6 flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 mr-2 text-cyan-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            Stream {movie.title}
-          </h2>
-
-          {movie.embed ? (
-            <div className="rounded-lg overflow-hidden shadow-2xl mb-8 card-glow">
-              <VideoPlayer embedUrl={movie.embed} title={movie.title} />
-            </div>
-          ) : (
-            <div className="aspect-video bg-gray-800 rounded-lg flex items-center justify-center mb-8 border border-gray-700">
-              <div className="text-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-16 w-16 mx-auto text-gray-600 mb-4"
+                  className="h-5 w-5 mr-2 transform group-hover:-translate-x-1 transition"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -221,100 +67,188 @@ export default async function MoviePage({
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                    d="M10 19l-7-7m0 0l7-7m-7 7h18"
                   />
                 </svg>
-                <p className="text-gray-400 text-lg mb-2">Video coming soon</p>
-                <p className="text-gray-500">
-                  This title will be available shortly
-                </p>
-              </div>
-            </div>
-          )}
+                Back to Browse
+              </Link>
 
-          {/* Movie Info */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <div className="bg-gray-800 bg-opacity-50 p-6 rounded-lg">
-              <h3 className="text-lg font-medium mb-3 text-cyan-400">
-                About the Movie
-              </h3>
-              <p className="text-gray-300">{movie.description}</p>
-            </div>
-            <div className="bg-gray-800 bg-opacity-50 p-6 rounded-lg">
-              <h3 className="text-lg font-medium mb-3 text-cyan-400">Cast</h3>
-              <ul className="space-y-2 text-gray-300">
-                <li>Actor Name as Character</li>
-                <li>Actor Name as Character</li>
-                <li>Actor Name as Character</li>
-                <li>Actor Name as Character</li>
-              </ul>
-            </div>
-            <div className="bg-gray-800 bg-opacity-50 p-6 rounded-lg">
-              <h3 className="text-lg font-medium mb-3 text-cyan-400">
-                Details
-              </h3>
-              <div className="space-y-2 text-gray-300">
-                <div className="flex justify-between">
-                  <span className="text-gray-400">Release Date:</span>
-                  <span>April 15, 2023</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-400">Director:</span>
-                  <span>Director Name</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-400">Runtime:</span>
-                  <span>135 minutes</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-400">Language:</span>
-                  <span>English</span>
-                </div>
+              {/* Title & Metadata */}
+              <h1 className="text-5xl md:text-7xl font-extrabold mb-4 tracking-tight leading-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-400 drop-shadow-2xl">
+                {movie.title}
+              </h1>
+
+              <div className="flex flex-wrap items-center gap-4 mb-8 text-sm md:text-base font-medium text-gray-300">
+                <span className="px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white">
+                  {movie.year}
+                </span>
+                <span className="flex items-center gap-1 text-yellow-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 fill-current" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  9.2 Rating
+                </span>
+                <span>2h 15m</span>
+                <span className="px-2 py-0.5 border border-gray-500 rounded text-xs uppercase tracking-wide">HD</span>
+              </div>
+
+              {/* Genres */}
+              <div className="flex flex-wrap gap-3 mb-8">
+                {movie.genres?.map((genre) => (
+                  <span
+                    key={genre}
+                    className="px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/20 backdrop-blur-sm border border-white/10 transition text-sm text-gray-200"
+                  >
+                    {genre}
+                  </span>
+                ))}
+              </div>
+
+              {/* Description */}
+              <p className="text-lg md:text-xl text-gray-300 mb-10 leading-relaxed max-w-2xl line-clamp-3 md:line-clamp-none">
+                {movie.description}
+              </p>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap gap-4">
+                <button className="px-8 py-4 bg-white text-black hover:bg-gray-200 rounded-xl font-bold text-lg flex items-center transition-transform hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 mr-2 fill-current"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  Watch Trailer
+                </button>
+                <button className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white rounded-xl font-bold text-lg flex items-center transition">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 mr-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 4v16m8-8H4"
+                    />
+                  </svg>
+                  Add to List
+                </button>
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* Banner Ad */}
-          <BannerAd />
+      {/* Content Section */}
+      <div className="container mx-auto px-6 md:px-12 py-16 -mt-10 relative z-10">
+        
+        {/* Video Player Section */}
+        <div className="mb-20">
+             <div className="flex items-center mb-8">
+                <div className="h-8 w-1 bg-cyan-500 rounded-full mr-4"></div>
+                <h2 className="text-3xl font-bold text-white">Stream Now</h2>
+             </div>
+            {movie.embed ? (
+                <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black/50 backdrop-blur-xl">
+                    <VideoPlayer embedUrl={movie.embed} title={movie.title} />
+                </div>
+            ) : (
+                <div className="aspect-video bg-gray-900/50 rounded-2xl flex items-center justify-center border border-white/10 backdrop-blur-sm">
+                    <div className="text-center">
+                        <p className="text-gray-400 text-xl">Trailer unavailable</p>
+                    </div>
+                </div>
+            )}
+        </div>
 
-          {/* Similar Movies */}
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold mb-6 flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 mr-2 text-cyan-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"
-                />
-              </svg>
-              Similar Content
-            </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-              {movies.map((m) => (
-                <Link key={m.id} href={`/movies/${m.id}`} className="block">
-                  <div className="rounded-lg overflow-hidden hover:card-glow transition-all">
-                    <div className="relative aspect-[2/3]">
-                      <Image
-                        src={m.poster}
-                        alt={m.title}
-                        fill
-                        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 16vw"
-                        className="object-cover hover:scale-110 transition-all duration-500"
-                      />
+        {/* Details Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          {/* Left Column: Info */}
+          <div className="lg:col-span-2 space-y-12">
+            
+            {/* Storyline */}
+            <section>
+                <h3 className="text-2xl font-bold mb-4 text-white">Storyline</h3>
+                <p className="text-gray-400 text-lg leading-relaxed">
+                    {movie.description}
+                </p>
+            </section>
+
+            {/* Cast */}
+            <section>
+                <h3 className="text-2xl font-bold mb-6 text-white">Top Cast</h3>
+                <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
+                    {movie.cast?.length ? (
+                        movie.cast.map((actor) => (
+                            <div key={actor.id} className="flex-shrink-0 w-32 group cursor-pointer">
+                                <div className="w-32 h-32 rounded-full bg-gray-800 mb-3 overflow-hidden border-2 border-transparent group-hover:border-cyan-500 transition relative">
+                                    {actor.profile_path ? (
+                                        <Image 
+                                            src={actor.profile_path} 
+                                            alt={actor.name} 
+                                            fill 
+                                            className="object-cover"
+                                            sizes="128px"
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center text-gray-500">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                            </svg>
+                                        </div>
+                                    )}
+                                </div>
+                                <p className="text-center font-medium text-white group-hover:text-cyan-400 transition text-sm truncate">{actor.name}</p>
+                                <p className="text-center text-xs text-gray-500 truncate">{actor.character}</p>
+                            </div>
+                        ))
+                    ) : (
+                        <p className="text-gray-400">Cast information unavailable</p>
+                    )}
+                </div>
+            </section>
+          </div>
+
+          {/* Right Column: Sidebar Stats */}
+          <div className="space-y-8">
+            <div className="bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/10">
+                <h3 className="text-xl font-bold mb-6 text-white border-b border-white/10 pb-4">Movie Info</h3>
+                <div className="space-y-4">
+                    <div>
+                        <span className="block text-sm text-gray-500 mb-1">Original Title</span>
+                        <span className="text-lg font-medium text-gray-200">{movie.title}</span>
                     </div>
-                    <div className="p-2 bg-gray-800 bg-opacity-70">
-                      <p className="text-xs text-center truncate">{m.title}</p>
+                    <div>
+                        <span className="block text-sm text-gray-500 mb-1">Status</span>
+                        <span className="text-lg font-medium text-gray-200">{movie.status || "Released"}</span>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                    <div>
+                        <span className="block text-sm text-gray-500 mb-1">Release Date</span>
+                        <span className="text-lg font-medium text-gray-200">{movie.release_date || movie.year}</span>
+                    </div>
+                    <div>
+                        <span className="block text-sm text-gray-500 mb-1">Runtime</span>
+                        <span className="text-lg font-medium text-gray-200">{movie.runtime || "N/A"}</span>
+                    </div>
+                    <div>
+                        <span className="block text-sm text-gray-500 mb-1">Original Language</span>
+                        <span className="text-lg font-medium text-gray-200">{movie.original_language || "English"}</span>
+                    </div>
+                </div>
+            </div>
+            
+            {/* Banner Ad Placement */}
+            <div className="rounded-2xl overflow-hidden">
+                <BannerAd />
             </div>
           </div>
         </div>

@@ -22,7 +22,7 @@ export default function AdScript() {
       };
 
       script.onerror = (error) => {
-        console.error("Ad script failed to load:", error);
+        console.warn("Ad script failed to load (likely blocked by ad blocker):", error);
         setIsLoaded(false);
       };
 
@@ -33,7 +33,8 @@ export default function AdScript() {
     // Setting up click handlers for testing pop-unders
     const setupClickHandlers = () => {
       // Only add handlers after DOM is fully loaded
-      const handleClick = (event) => {
+      // @ts-ignore
+      const handleClick = (event: any) => {
         // We want to avoid triggering on UI elements like buttons
         if (
           event.target.tagName === "BUTTON" ||
@@ -54,9 +55,13 @@ export default function AdScript() {
           sessionStorage.setItem("popunderLastShown", now.toString());
 
           // Trigger pop-under (if any external pop-under function was defined by ad script)
+          // @ts-ignore
           if (window.pu) {
+            // @ts-ignore
             window.pu();
+            // @ts-ignore
           } else if (window.popunder) {
+            // @ts-ignore
             window.popunder();
           }
         }

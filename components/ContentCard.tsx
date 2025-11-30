@@ -1,113 +1,62 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { Play } from "lucide-react";
 
-interface ContentItem {
-  id: string;
-  type: "movie" | "series";
-  title: string;
-  poster: string;
-  description: string;
-  year?: string;
-  seasons?: { length: number }[];
+interface ContentCardProps {
+  item: {
+    id: string;
+    title: string;
+    poster: string;
+    type: "movie" | "series";
+    year?: string;
+  };
 }
 
-export default function ContentCard({ item }: { item: ContentItem }) {
-  const [isHovered, setIsHovered] = useState(false);
-  const [imgError, setImgError] = useState(false);
+export default function ContentCard({ item }: ContentCardProps) {
+  const { id, title, poster, type } = item;
+  const imageSrc = poster || "/placeholder.jpg";
 
   return (
-    <div
-      className="group relative"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <Link
-        href={
-          item.type === "movie" ? `/movies/${item.id}` : `/series/${item.id}`
-        }
+    <Link href={type === "movie" ? `/movies/${id}` : `/series/${id}`}>
+      <motion.div 
+        className="relative group rounded-xl overflow-hidden aspect-[2/3] cursor-pointer bg-gray-800"
+        whileHover={{ scale: 1.05, y: -5 }}
+        transition={{ duration: 0.3 }}
       >
-        <div
-          className={`
-          rounded-lg overflow-hidden bg-gradient-to-b from-gray-800 to-gray-900
-          transition-all duration-300 h-full
-          ${isHovered ? "transform scale-105 card-glow" : "scale-100"}
-        `}
-        >
-          <div className="relative aspect-[2/3] w-full overflow-hidden">
-            <Image
-              src={
-                imgError ? "/placeholders/poster-placeholder.jpg" : item.poster
-              }
-              alt={item.title}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className={`object-cover transition-all duration-500 ${
-                isHovered ? "scale-110" : "scale-100"
-              }`}
-              onError={() => setImgError(true)}
-            />
-
-            {item.type === "series" && (
-              <div className="absolute top-2 right-2 bg-purple-600 text-xs px-1.5 py-0.5 rounded z-10">
-                SERIES
-              </div>
-            )}
-
-            {isHovered && (
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent flex items-end">
-                <div className="p-4">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs px-1.5 py-0.5 bg-cyan-600 rounded-sm font-medium">
-                      HD
-                    </span>
-                    <span className="text-xs text-cyan-400">
-                      {item.year || "2023"}
-                    </span>
-                    {item.type === "series" && (
-                      <span className="text-xs text-cyan-400">
-                        {item.seasons?.length || "1"} Season
-                        {item.seasons?.length !== 1 ? "s" : ""}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-xs text-gray-300 line-clamp-2 mb-3">
-                    {item.description}
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div className="p-3">
-            <h3 className="font-medium text-sm text-center group-hover:text-cyan-400 transition-colors">
-              {item.title}
-            </h3>
-
-            {isHovered && (
-              <div className="mt-3 transform transition-all duration-200 translate-y-0 opacity-100">
-                <button className="w-full py-1.5 rounded bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs font-medium flex items-center justify-center hover:from-cyan-600 hover:to-blue-700 transition">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-3.5 w-3.5 mr-1"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  {item.type === "movie" ? "Watch Now" : "Play Series"}
-                </button>
-              </div>
-            )}
+        <Image
+          src={imageSrc}
+          alt={title}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-110"
+          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 20vw"
+        />
+        
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+        
+        {/* Play Button Overlay */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30">
+            <Play className="w-6 h-6 text-white fill-white" />
           </div>
         </div>
-      </Link>
-    </div>
+
+        {/* Content Info */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+          <h3 className="text-white font-bold text-lg truncate drop-shadow-md">
+            {title}
+          </h3>
+          <p className="text-cyan-400 text-xs font-semibold uppercase tracking-wider mt-1">
+            {type === "movie" ? "Movie" : "Series"}
+          </p>
+        </div>
+        
+        {/* Border Glow Effect */}
+        <div className="absolute inset-0 border-2 border-transparent group-hover:border-cyan-500/50 rounded-xl transition-colors duration-300 pointer-events-none" />
+      </motion.div>
+    </Link>
   );
 }
